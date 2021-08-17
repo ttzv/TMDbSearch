@@ -21,13 +21,8 @@ header, footer{
 }
 
 header{
-    position: fixed;
+    position: sticky;
     top: 0px;
-}
-
-footer{
-    position: fixed;
-    bottom: 0px;
 }
 
 input{
@@ -38,6 +33,7 @@ input:focus {
     outline: none;
 }
 
+/* Search bar */
 .search-container{
     flex: 1;
     height: 100%;
@@ -58,6 +54,8 @@ input:focus {
             margin-right: 1em;
         }
 
+
+
 .display-flex{
     display: flex;
 }
@@ -66,5 +64,21 @@ input:focus {
     align-items: center;
     justify-content: center;
 }
+
+.footer-content{
+    height: 100%;
+}
+
+.footer-content svg{
+    padding: 1em;
+    max-height: calc(100% - 1em);
+}
+
+footer{
+    position: sticky;
+    bottom: 0px;
+}
+
+
 
 

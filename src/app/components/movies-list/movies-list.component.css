@@ -1,0 +1,13 @@
+/* Movie list */
+.movie-list{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 1em 0em 1em 0em;
+}
+
+.movie-entry{
+     position: static;
+     padding: 1.5em;
+}

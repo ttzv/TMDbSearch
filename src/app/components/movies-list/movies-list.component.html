@@ -1,0 +1,11 @@
+<div class="movie-list display-flex">
+    {{configuration}}
+    <div *ngFor="let movie of movieList" class="movie-entry">
+        <div class="movie-poster">
+            <img src="{{movie.posterFullPath}}" alt="{{movie.original_title}}">
+        </div>
+        <div class="movie-title">
+            {{movie.original_title}}
+        </div>
+    </div>
+</div>
