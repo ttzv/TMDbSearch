@@ -1,10 +1,9 @@
 /* Movie list */
 .movie-list{
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100%;
-    padding: 1em 0em 1em 0em;
+    height: calc(100vh - 10em);
+    overflow-y: auto;
 }
 
 .movie-entry{

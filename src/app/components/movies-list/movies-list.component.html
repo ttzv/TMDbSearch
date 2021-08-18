@@ -1,4 +1,4 @@
-<div class="movie-list display-flex">
+<div class="movie-list display-flex" (scroll)="handleScroll($event)">
     {{configuration}}
     <div *ngFor="let movie of movieList" class="movie-entry">
         <div class="movie-poster">
