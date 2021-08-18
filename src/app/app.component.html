@@ -1,17 +1,13 @@
 
   <header>
-    <div class="search-container display-flex flex-center">
-      <div class="search-input display-flex">
-        <i class="fas fa-search"></i>
-        <label for=""></label>
-        <input id="" type="text" placeholder="Search for a movie">
-      </div>
-    </div>
+
+    <app-search></app-search>
+
   </header>
 
   <div class="main-content">
 
-    <app-movies-list></app-movies-list>
+    <router-outlet></router-outlet>
     
   </div>
 

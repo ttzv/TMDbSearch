@@ -1,5 +1,7 @@
 <div class="movie-list display-flex" (scroll)="handleScroll($event)">
-    {{configuration}}
+    <div *ngIf="movieList.length === 0">
+        <div>We couldn't find anything related to your search criteria.</div>
+    </div>
     <div *ngFor="let movie of movieList" class="movie-entry">
         <div class="movie-poster">
             <img src="{{movie.posterFullPath}}" alt="{{movie.original_title}}">

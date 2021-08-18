@@ -7,6 +7,9 @@
 }
 
 .movie-entry{
-     position: static;
-     padding: 1.5em;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: static;
+    padding: 1.5em;
 }

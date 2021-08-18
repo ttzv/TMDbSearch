@@ -7,9 +7,11 @@ import { AppComponent } from './app.component';
 import { AuthTokenInterceptorService } from './interceptors/auth-token-interceptor.service';
 import { MoviesListComponent } from './components/movies-list/movies-list.component';
 import { RouterModule, Routes } from '@angular/router';
+import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
   {path: 'popular', component: MoviesListComponent},
+  {path: 'search/:query', component: MoviesListComponent},
   {path: '', redirectTo: '/popular', pathMatch: 'full'},
   {path: '**', redirectTo: '/popular', pathMatch: 'full'}
 ]
@@ -17,7 +19,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    MoviesListComponent
+    MoviesListComponent,
+    SearchComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

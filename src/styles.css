@@ -30,29 +30,6 @@ input:focus {
     outline: none;
 }
 
-
-/* Search bar */
-.search-container{
-    height: 100%;
-    flex-direction: column;
-}
-
-    .search-container .search-input{
-        flex-direction: row;
-        justify-content: center;
-        background-color: white;
-        border: 1px solid black;
-        border-radius: 2em;
-        padding: 1em;
-    }
-
-        .search-container .search-input i{
-            color: gray;
-            margin-right: 1em;
-        }
-
-
-
 .display-flex{
     display: flex;
 }

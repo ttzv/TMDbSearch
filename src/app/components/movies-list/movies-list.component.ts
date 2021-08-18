@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Configuration } from 'src/app/commons/configuration';
 import { Movie } from 'src/app/commons/movie';
 import { ConfigurationService } from 'src/app/services/configuration.service';
@@ -15,34 +16,58 @@ export class MoviesListComponent implements OnInit {
   configuration: Configuration;
   movieList: Movie[] = [];
 
-  private page: number = 0;
+  private page: number = 1;
   private refreshed: boolean = false;
 
-  constructor(private configurationService: ConfigurationService,
-              private movieService: MovieService,
-              private imageService: ImageService) { }
+  constructor(private movieService: MovieService,
+              private imageService: ImageService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.listMovies();
-    document.addEventListener('scroll', console.log);
+    this.route.paramMap.subscribe(() => {
+      this.page = 1;
+      this.movieList = [];
+      this.listMovies();
+    })
   }
 
   listMovies() {
-    this.movieService.getPopularPaginated(0).subscribe(
-      data => {
-        const newMovies = data.results;
-        newMovies.forEach(movieEl => {
-          movieEl.posterFullPath = 
-            this.imageService.posterUrl('default', movieEl.poster_path);
-        });
-        this.movieList.push(...newMovies);
-      });
+    const searchMode = this.route.snapshot.paramMap.has('query');
+    console.log(this.route.snapshot.paramMap)
+    if(searchMode){
+      console.log(searchMode);
+      this.searchMovies()
+    } else {
+      this.listPopular();
     }
+  }
+
+  searchMovies() {
+    const query = this.route.snapshot.paramMap.get('query');
+    this.movieService.searchPaginated(query!, this.page).subscribe(
+      this.handlePaginatedData());
+  }
+
+  listPopular() {
+    this.movieService.getPopularPaginated(this.page).subscribe(
+      this.handlePaginatedData());
+  }
+
+  handlePaginatedData(){
+    return (data: { results: any; }) => {
+      const newMovies = data.results;
+      newMovies.forEach((movieEl: { posterFullPath: string; poster_path: string; }) => {
+        movieEl.posterFullPath =
+          this.imageService.posterUrl('default', movieEl.poster_path);
+      });
+      this.movieList.push(...newMovies);
+      this.page += 1;
+    }
+  }
 
   handleScroll(event: any){
     const scrollPosition = this.getScrollPositionFloat(event.target);
     if(this.loadMore(scrollPosition)){
-      this.page += 1;
       this.listMovies();
     }
   }
@@ -54,13 +79,12 @@ export class MoviesListComponent implements OnInit {
   }
 
   loadMore(scrollPosition: number){
-    if(scrollPosition > 0.75 && !this.refreshed){
+    if(scrollPosition >= 1 && !this.refreshed){
       this.refreshed = true;
       return true;
-    } else if (scrollPosition < 0.75){
+    } else {
       this.refreshed = false;
       return false;
     }
-    return false;
   }
 }

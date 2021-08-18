@@ -20,6 +20,12 @@ export class MovieService {
     if(pageNo > 0) url += `?page=${pageNo}`;
     return this.httpClient.get<GetResponseMovies>(url);
   }
+
+  searchPaginated(query: string, pageNo: number): Observable<GetResponseMovies>{
+    let url = environment.tmdb.baseUrl + `/search/movie?query=${query}`;
+    if(pageNo > 0) url += `&page=${pageNo}`;
+    return this.httpClient.get<GetResponseMovies>(url);
+  }
 }
 
 interface GetResponseMovies{

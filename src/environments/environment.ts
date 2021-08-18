@@ -10,6 +10,7 @@ export const environment = {
   tmdbApiKey: Secrets.tmdbApiKey,
   tmdb: {
     baseUrl: 'https://api.themoviedb.org/3',
+    posterPlaceholder: '/assets/images/poster_placeholder.png'
   }
 };
 
