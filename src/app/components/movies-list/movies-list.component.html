@@ -1,5 +1,8 @@
 <div class="movie-list" (scroll)="handleScroll($event)">
-    <div *ngIf="movieList.length === 0">
+    <div *ngIf="loading">
+        <div>Loading</div>
+    </div>
+    <div *ngIf="movieList.length === 0 && !loading">
         <div>We couldn't find anything related to your search criteria.</div>
     </div>
     <div *ngFor="let movie of movieList" class="movie-entry">

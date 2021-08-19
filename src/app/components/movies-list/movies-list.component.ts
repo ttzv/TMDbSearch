@@ -15,6 +15,7 @@ export class MoviesListComponent implements OnInit {
 
   configuration: Configuration;
   movieList: Movie[] = [];
+  loading: boolean = true;
 
   private page: number = 1;
   private refreshed: boolean = false;
@@ -32,6 +33,7 @@ export class MoviesListComponent implements OnInit {
   }
 
   listMovies() {
+    this.loading = true;
     const searchMode = this.route.snapshot.paramMap.has('query');
     console.log(this.route.snapshot.paramMap)
     if(searchMode){
@@ -57,11 +59,14 @@ export class MoviesListComponent implements OnInit {
     return (data: { results: any; }) => {
       const newMovies = data.results;
       newMovies.forEach((movieEl: { posterFullPath: string; poster_path: string; }) => {
-        movieEl.posterFullPath =
-          this.imageService.posterUrl('default', movieEl.poster_path);
-      });
+        movieEl.posterFullPath = this.imageService.getPosterPlaceholder();
+        this.imageService.baseSecureUrl.subscribe(
+          url => movieEl.posterFullPath =
+              this.imageService.getPosterUrl(url, 'default', movieEl.poster_path)
+        )});
       this.movieList.push(...newMovies);
       this.page += 1;
+      this.loading = false;
     }
   }
 
