@@ -8,10 +8,12 @@ import { AuthTokenInterceptorService } from './interceptors/auth-token-intercept
 import { MoviesListComponent } from './components/movies-list/movies-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchComponent } from './components/search/search.component';
+import { ConfigurationService } from './services/configuration.service';
 
 const routes: Routes = [
   {path: 'popular', component: MoviesListComponent},
   {path: 'search/:query', component: MoviesListComponent},
+  {path: '', redirectTo: '/popular', pathMatch: 'full'},
   {path: '', redirectTo: '/popular', pathMatch: 'full'},
   {path: '**', redirectTo: '/popular', pathMatch: 'full'}
 ]
@@ -28,7 +30,8 @@ const routes: Routes = [
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptorService, multi: true}],
+  providers: [ConfigurationService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

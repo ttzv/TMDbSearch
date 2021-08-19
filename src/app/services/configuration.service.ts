@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Configuration } from '../commons/configuration';
 import { environment } from 'src/environments/environment';
-import { ConfigurationImages } from '../commons/configuration-images';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +10,13 @@ import { ConfigurationImages } from '../commons/configuration-images';
 export class ConfigurationService {
 
   storage: Storage = sessionStorage;
-  baseUrl!: string
-  secureBaseUrl!: string;
-  backdropSizes!: string[];
-  logoSizes!: string[];
-  posterSizes!: string[];
-  profileSizes!: string[];
-  stillSizes!: string[];
+  baseUrl: string
+  secureBaseUrl: string;
+  backdropSizes: string[];
+  logoSizes: string[];
+  posterSizes: string[];
+  profileSizes: string[];
+  stillSizes: string[];
 
   private cfgUrl: string = environment.tmdb.baseUrl + '/configuration';
 
@@ -31,7 +30,6 @@ export class ConfigurationService {
       this.posterSizes = cfgImages.poster_sizes;
       this.profileSizes = cfgImages.profile_sizes;
       this.stillSizes = cfgImages.still_sizes;
-      console.log(data);
     })
   }
 

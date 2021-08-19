@@ -1,13 +1,21 @@
-<div class="movie-list display-flex" (scroll)="handleScroll($event)">
+<div class="movie-list" (scroll)="handleScroll($event)">
     <div *ngIf="movieList.length === 0">
         <div>We couldn't find anything related to your search criteria.</div>
     </div>
     <div *ngFor="let movie of movieList" class="movie-entry">
         <div class="movie-poster">
+            <div class="movie-release-date">{{movie.release_date}}</div>
             <img src="{{movie.posterFullPath}}" alt="{{movie.original_title}}">
         </div>
         <div class="movie-title">
-            {{movie.original_title}}
+            <div class="title-local">
+                <a>
+                    {{movie.title}}
+                </a> 
+            </div>
+            <div *ngIf="movie.title !== movie.original_title" class="title-orig">
+                {{movie.original_title}}
+            </div>
         </div>
     </div>
 </div>

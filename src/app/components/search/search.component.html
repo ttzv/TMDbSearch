@@ -1,9 +1,12 @@
 <div class="search-container display-flex flex-center">
+  <label for="search">
     <div class="search-input display-flex">
-      <i class="fas fa-search"></i>
+      <i (click)="performSearch(search.value)" class="fas fa-search"></i>
       <input #search
-            type="text" 
+            type="text"
+            name="search" 
             placeholder="Search for a movie"
             (keyup.enter)="performSearch(search.value)">
     </div>
-  </div>
+  </label>
+</div>
