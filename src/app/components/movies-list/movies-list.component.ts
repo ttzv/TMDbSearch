@@ -18,7 +18,6 @@ export class MoviesListComponent implements OnInit {
   loading: boolean = true;
 
   private page: number = 1;
-  private refreshed: boolean = false;
 
   constructor(private movieService: MovieService,
               private imageService: ImageService,
@@ -72,7 +71,7 @@ export class MoviesListComponent implements OnInit {
 
   handleScroll(event: any){
     const scrollPosition = this.getScrollPositionFloat(event.target);
-    if(this.loadMore(scrollPosition)){
+    if(this.canLoadMore(scrollPosition)){
       this.listMovies();
     }
   }
@@ -83,13 +82,8 @@ export class MoviesListComponent implements OnInit {
     return scrollPositionTop / scrollMaxHeight;
   }
 
-  loadMore(scrollPosition: number){
-    if(scrollPosition >= 1 && !this.refreshed){
-      this.refreshed = true;
-      return true;
-    } else {
-      this.refreshed = false;
-      return false;
-    }
+  canLoadMore(scrollPosition: number){
+    return (scrollPosition >= 0.95 && !this.loading) ? 
+      true : false;
   }
 }
