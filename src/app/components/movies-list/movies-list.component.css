@@ -91,6 +91,8 @@
     left: calc(50% - .5em);
     font-size: 5em;
     animation: rotate 2s linear infinite;
+    color:#4ad5a6;
+    z-index: 1000;
 }
 
 @keyframes rotate {
