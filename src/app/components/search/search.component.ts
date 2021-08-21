@@ -21,7 +21,7 @@ export class SearchComponent implements OnInit {
   filterCount: number = 0;
 
   storage: Storage = sessionStorage;
-  genresFromStorage: Genre[];
+  genresFromStorage: Genre[] = [];
   
   constructor(private router: Router,
               private formBuilder: FormBuilder,
@@ -49,7 +49,7 @@ export class SearchComponent implements OnInit {
 
     this.genreService.getGenreList().subscribe(
       data => {
-        this.genreList = data.genres
+        this.genreList = data.genres;
         this.genresFromStorage.forEach((genre: Genre) => this.handleGenreSelection(genre));
       });
       
@@ -60,10 +60,12 @@ export class SearchComponent implements OnInit {
 
   readFromStorage() {
     const parsed = JSON.parse(this.storage.getItem('tmdbStore')!)
-    this.filterCount = parsed.filterCount;
-    this.filterForm.setValue(parsed.filterForm);
-    this.search = parsed.search;
-    this.genresFromStorage = parsed.selectedGenres;
+    if(parsed){  
+      this.filterCount = parsed.filterCount;
+      this.filterForm.setValue(parsed.filterForm);
+      this.search = parsed.search;
+      this.genresFromStorage = parsed.selectedGenres;
+    }
   }
 
 
