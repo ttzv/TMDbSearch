@@ -18,8 +18,10 @@ export class SearchComponent implements OnInit {
   yearOptions: number[] = [];
   ratingOptions: number[] = [1,2,3,4,5,6,7,8,9,10];
   search: string;
-
   filterCount: number = 0;
+
+  storage: Storage = sessionStorage;
+  genresFromStorage: Genre[];
   
   constructor(private router: Router,
               private formBuilder: FormBuilder,
@@ -46,11 +48,25 @@ export class SearchComponent implements OnInit {
     })
 
     this.genreService.getGenreList().subscribe(
-      data => this.genreList = data.genres
-    )
-
+      data => {
+        this.genreList = data.genres
+        this.genresFromStorage.forEach((genre: Genre) => this.handleGenreSelection(genre));
+      });
+      
+      this.readFromStorage();
     this.populateYearSelect();
+
   }
+
+  readFromStorage() {
+    const parsed = JSON.parse(this.storage.getItem('tmdbStore')!)
+    this.filterCount = parsed.filterCount;
+    this.filterForm.setValue(parsed.filterForm);
+    this.search = parsed.search;
+    this.genresFromStorage = parsed.selectedGenres;
+  }
+
+
 
   get dateAt(){ return this.filterForm.get('date.at'); }
   get dateAfter(){ return this.filterForm.get('date.after'); }
@@ -80,6 +96,8 @@ export class SearchComponent implements OnInit {
     } else {
       this.router.navigateByUrl(``);
     }
+
+    this.persistInSession(this.search, this.filterCount, this.filterForm, this.selectedGenres)
   }
 
   toggleFilters(){
@@ -96,6 +114,7 @@ export class SearchComponent implements OnInit {
   private getFilterQuery(): string{
     const filters = this.sanitize(this.filterForm.value)
     this.filterCount = this.countFilters(filters);
+
     return this.buildSearchPath(filters);
   }
 
@@ -124,9 +143,14 @@ export class SearchComponent implements OnInit {
   }
 
   handleGenreSelection(genre: Genre){
-    console.log(genre);
-    if(this.genreList.includes(genre)){
+    let foundGenre: Genre | undefined = undefined;
+    if(genre){
+      foundGenre = this.genreList.find(g => g.id === genre.id);
+    }
+    if(foundGenre){
       this.selectedGenres.push(genre);
+      let index = this.genreList.indexOf(genre);
+      if(!index) index = this.genreList.indexOf(foundGenre);
       this.genreList.splice(this.genreList.indexOf(genre), 1);
     }
     this.search = '';
@@ -158,6 +182,7 @@ export class SearchComponent implements OnInit {
       this.selectedGenres = [];
       this.sortGenreList();
     }
+    this.clearSearch();
     
   }
 
@@ -186,6 +211,18 @@ export class SearchComponent implements OnInit {
   clearSearch(){
     this.search = '';
   }
+
+  persistInSession(search: string, filterCount: number, filterForm: FormGroup, selectedGenres: Genre[]) {
+    const tmdbStore = {
+      search: search,
+      filterCount: filterCount,
+      filterForm: filterForm.value,
+      selectedGenres: selectedGenres
+    }
+    this.storage.setItem('tmdbStore', JSON.stringify(tmdbStore));
+  }
 }
+
+
 
 

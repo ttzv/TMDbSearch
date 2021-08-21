@@ -41,7 +41,7 @@
           <span>Rating at least: </span>
           <select formControlName="rating" >
             <option></option>
-            <option *ngFor="let option of ratingOptions">{{option}}</option>
+            <option *ngFor="let option of ratingOptions" value="{{option}}">{{option}}</option>
           </select>
         </div>
       </div>

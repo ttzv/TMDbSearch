@@ -1,13 +1,13 @@
 <div class="movie-list" (scroll)="handleScroll($event)">
-    <div *ngIf="loading">
-        <div>Loading</div>
+    <div class="loading">
+        <i class="fas fa-compact-disc"></i>
     </div>
     <div *ngIf="movieList.length === 0 && !loading">
         <div>We couldn't find anything related to your search criteria.</div>
     </div>
     <div *ngFor="let movie of movieList" class="movie-entry">
         <div class="movie-poster">
-            <div class="movie-release-date">{{movie.release_date}}</div>
+            <div *ngIf="movie.release_date" class="movie-release-date">{{movie.release_date}}</div>
             <img src="{{movie.posterFullPath}}" alt="{{movie.original_title}}">
         </div>
         <div class="movie-title">
