@@ -54,7 +54,6 @@
         }
 
 .movie-poster img{
-    cursor: pointer;
     border-radius: 1em;
     border: 1px solid transparent;
     transition: transform .2s ease-in-out;
