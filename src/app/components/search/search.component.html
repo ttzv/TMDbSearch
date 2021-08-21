@@ -1,12 +1,91 @@
+<div [ngClass]="filterFormClasses()">
+  <form [formGroup]="filterForm" (ngSubmit)="performSearch(search)">
+      <div formGroupName="date" class="filter-section">
+        <p>Release date</p>
+        <div class="input-group">
+          <span>At: </span>
+          <select formControlName="at" (change)="resetDateRange()">
+            <option></option>
+            <option *ngFor="let option of yearOptions">{{option}}</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <span>After: </span>
+          <input #dateAfter formControlName="after" type="date" min max="{{dateBefore.value}}" (change)="resetDateAt()">
+        </div>
+        <div class="input-group">
+          <span>Before: </span>
+          <input #dateBefore formControlName="before" type="date" min="{{dateAfter.value}}" max (change)="resetDateAt()">
+        </div>
+      </div>
+      <div formGroupName="genres" class="filter-section">
+        <p>Genres</p>
+        <div class="input-group">
+          <span>Select genres: </span>
+          <select formControlName="genre" (ngModelChange)="handleGenreSelection($event)" >
+            <option *ngFor="let genre of genreList" [ngValue]="genre">{{genre.name}}</option>
+          </select>
+        </div>
+        <div class="genre-basket" *ngIf="selectedGenres.length > 0">
+          <div class="small-button" *ngFor="let genre of selectedGenres">
+            {{genre.name}}
+            <button (click)="handleGenreDeselection(genre)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div formGroupName="rating" class="filter-section" (change)="clearSearch()">
+        <p>Rating</p>
+        <div class="input-group">
+          <span>Rating at least: </span>
+          <select formControlName="rating" >
+            <option></option>
+            <option *ngFor="let option of ratingOptions">{{option}}</option>
+          </select>
+        </div>
+      </div>
+      <div formGroupName="sorting" class="filter-section" (change)="clearSearch()">
+        <p>Sorting</p>
+        <div class="radio-sorting">
+          <div>
+            <input formControlName="sort" type="radio" value="popularity.desc">
+            <span>Popularity</span>
+          </div>
+          <div>
+            <input formControlName="sort" type="radio" value="primary_release_date.desc">           
+            <span>Release date</span>
+          </div>
+          <div>
+            <input formControlName="sort" type="radio" value="original_title.desc">
+            <span>Title</span>
+          </div>
+          <div>
+            <input formControlName="sort" type="radio" value="vote_average.desc"> 
+            <span>Rating</span>
+          </div>
+        </div>
+      </div>
+      <div class="filter-form-buttons">
+        <button type="submit">
+          <i class="fas fa-search"></i>Search</button>
+        <button (click)="onReset()">
+          <i class="fas fa-trash-alt"></i>Clear</button>
+      </div>
+    </form>
+  </div>
 <div class="search-container display-flex flex-center">
-  <label for="search">
+  <div class="input-group" for="search">
     <div class="search-input display-flex">
-      <i (click)="performSearch(search.value)" class="fas fa-search"></i>
-      <input #search
-            type="text"
-            name="search" 
-            placeholder="Search for a movie"
-            (keyup.enter)="performSearch(search.value)">
+      <button (click)="performSearch(search) "class="search-btns">
+        <i class="fas fa-search"></i>
+      </button>
+      <input [(ngModel)]="search" type="text" name="search" placeholder="Search for a movie"
+        (keyup.enter)="performSearch(search)">
     </div>
-  </label>
+  </div>
+  <button (click)="toggleFilters()" class="search-btns">
+    <i class="fas fa-filter"></i>
+  </button>
+  <span *ngIf="filterCount > 0" class="filter-count">{{filterCount}}</span>
 </div>

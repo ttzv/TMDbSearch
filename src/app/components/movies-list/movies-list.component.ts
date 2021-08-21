@@ -1,8 +1,8 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { query } from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Configuration } from 'src/app/commons/configuration';
 import { Movie } from 'src/app/commons/movie';
-import { ConfigurationService } from 'src/app/services/configuration.service';
 import { ImageService } from 'src/app/services/image.service';
 import { MovieService } from 'src/app/services/movie.service';
 
@@ -21,31 +21,53 @@ export class MoviesListComponent implements OnInit {
 
   constructor(private movieService: MovieService,
               private imageService: ImageService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private router:Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
-      this.page = 1;
-      this.movieList = [];
-      this.listMovies();
+      this.handleRouteChange();
     })
+    this.route.queryParamMap.subscribe(() => {
+      this.handleRouteChange();
+    })
+  }
+
+  handleRouteChange(){
+    this.page = 1;
+    this.movieList = [];
+    this.listMovies();
   }
 
   listMovies() {
     this.loading = true;
     const searchMode = this.route.snapshot.paramMap.has('query');
-    console.log(this.route.snapshot.paramMap)
+    const discoverMode = this.route.snapshot.queryParamMap.keys.length > 0;
     if(searchMode){
-      console.log(searchMode);
       this.searchMovies()
+    } else if (discoverMode) {
+      this.discoverMovies();
     } else {
       this.listPopular();
     }
   }
 
+  discoverMovies() {
+    const query = this.router.url.split('?')[1];
+    this.movieService.discoverPaginated(query, this.page).subscribe(
+      this.handlePaginatedData());
+  }
+
   searchMovies() {
     const query = this.route.snapshot.paramMap.get('query');
-    this.movieService.searchPaginated(query!, this.page).subscribe(
+    const year = this.route.snapshot.paramMap.get('year');
+    this.movieService.searchPaginated(
+            {
+              query: query,
+              pageNo: this.page,
+              year: year
+            }
+              ).subscribe(
       this.handlePaginatedData());
   }
 
