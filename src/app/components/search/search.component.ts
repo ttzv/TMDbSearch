@@ -100,6 +100,7 @@ export class SearchComponent implements OnInit {
     }
 
     this.persistInSession(this.search, this.filterCount, this.filterForm, this.selectedGenres)
+
   }
 
   toggleFilters(){
@@ -134,7 +135,7 @@ export class SearchComponent implements OnInit {
     return `?${filterPath.join('&')}`;
   }
 
-  sanitize(obj:any): any{
+  private sanitize(obj:any): any{
     const sanitized = JSON.parse(JSON.stringify(obj, (key, value) => {
       return (value === null ? undefined : value);
     }));
