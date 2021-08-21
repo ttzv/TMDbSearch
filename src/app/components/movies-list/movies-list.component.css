@@ -76,4 +76,31 @@
     font-size: small;
 }
 
+.notice{
+    position: fixed;
+    padding: 1em;
+    font-size: large;
+    font-weight: bold;
+    background: linear-gradient(90deg, rgba(1,180,228,1) 0%, rgba(144,206,161,1) 100%);
+    width:100%;
+    text-align: center;
+}
+
+.loading{
+    position: absolute;
+    top: calc(50% - .5em);
+    left: calc(50% - .5em);
+    font-size: 5em;
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }    
+}
+
    
