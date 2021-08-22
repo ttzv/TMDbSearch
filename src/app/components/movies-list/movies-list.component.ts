@@ -18,6 +18,7 @@ export class MoviesListComponent implements OnInit {
   loading: boolean = true;
 
   private page: number = 1;
+  private totalPages = 1;
 
   constructor(private movieService: MovieService,
               private imageService: ImageService,
@@ -77,9 +78,10 @@ export class MoviesListComponent implements OnInit {
   }
 
   handlePaginatedData(){
-    return (data: { results: any; }) => {
+    return (data: { results: Movie[]; total_pages: number }) => {
       const newMovies = data.results;
-      newMovies.forEach((movieEl: { posterFullPath: string; poster_path: string; }) => {
+      this.totalPages = data.total_pages;
+      newMovies.forEach((movieEl: Movie) => {
         movieEl.posterFullPath = this.imageService.getPosterPlaceholder();
         this.imageService.baseSecureUrl.subscribe(
           url => movieEl.posterFullPath =
@@ -105,6 +107,7 @@ export class MoviesListComponent implements OnInit {
   }
 
   canLoadMore(scrollPosition: number){
+    if(this.page >= this.totalPages) return false;
     return (scrollPosition >= 0.95 && !this.loading) ? 
       true : false;
   }
