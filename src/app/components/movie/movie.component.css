@@ -1,0 +1,82 @@
+.movie-container{
+    display: flex;
+    flex-direction: column;
+    padding:1em 1em 1em 1em;
+    align-items: center;
+    height: calc(100vh - 10em);
+    overflow-y: auto;
+}
+
+.movie-col{
+    width: 187px;
+}
+
+    .movie-col > div,article {
+        
+    }
+
+    .movie-col > div:hover, .movie > article:hover {
+        background-color: #e3e3e3;
+    }
+
+.movie-heading{
+    padding-bottom: 1em;
+}
+
+.movie-heading > h3{
+    color: gray;
+    text-align: left;
+}
+
+.movie-ratings{
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+    .movie-ratings .votes{
+        color: gray;
+    }
+
+    .movie-ratings .runtime{
+        color: rgb(168, 166, 166);
+        font-weight: 100;
+    }
+
+.score-big{
+    font-size: 2em;
+}
+
+@media (min-width: 768px){
+    .movie-container{
+        display: grid;
+        grid-template-columns: 187px auto;
+        column-gap: 2em;
+        grid-template-rows: auto auto;
+        margin: 0em 5em 0em 5em;
+        
+    }
+    .movie-col{
+        width: auto;
+    }
+
+    .movie-poster{
+        margin-right: 2em;
+    }
+}
+
+.movie-detail-section{
+    border-bottom: 1px solid rgb(209, 209, 209);
+    padding: .25em 0 1em 0;
+}
+
+.movie-detail-section:hover{
+    background-color: rgb(209, 209, 209);
+}
+
+article.movie-detail-section > h4{
+    padding-bottom: 1em;
+}
+
+

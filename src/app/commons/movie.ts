@@ -1,8 +1,10 @@
+import { Genre } from "./genre";
+
 export class Movie {
     id: number;
     adult: boolean;
     backdrop_path: string;
-    genre_ids: number[];
+    genres: Genre[];
     original_language: string;
     original_title: string;
     overview: string;
@@ -12,4 +14,8 @@ export class Movie {
     release_date: string;
     title: string;
     video: boolean;
+    vote_average: number;
+    vote_count: number;
+    runtime: number;
+
 }

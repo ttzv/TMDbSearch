@@ -1,0 +1,44 @@
+<div class="movie-container">
+    <div *ngIf="loading" class="loading">
+        <i class="fas fa-compact-disc"></i>
+    </div>
+    <div class="movie-col">
+        <div class="movie-heading">
+            <h1>{{movie.title}}</h1>
+            <h3>{{releaseYear}}</h3>
+        </div>
+        <div class="movie-poster">
+            <img src="{{movie.posterFullPath}}" alt="" srcset="">
+        </div>
+    </div>
+    <div class="movie-col">
+        <div class="movie-ratings movie-detail-section">
+            <div class="score">
+                <span class="score-big">{{scoreBig}}</span>
+                <span>.</span>
+                <span>{{scoreSmall}}</span>
+            </div>
+            <div class="votes">
+                {{movie.vote_count}}
+                <span>votes</span>
+            </div>
+            <div class="runtime">
+                {{movie.runtime}}
+                <span> minutes</span>
+            </div>
+        </div>
+        <div class="movie-detail-section">
+            <span>Genres: </span>
+            {{genres}}
+        </div>
+        <div class="movie-detail-section">
+            <span>Original title: </span>
+            {{movie.original_title}}
+        </div>
+        
+        <article class="movie-detail-section">
+            <h4>Overview</h4>
+            {{movie.overview}}
+        </article>
+    </div>        
+</div>

@@ -10,10 +10,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { SearchComponent } from './components/search/search.component';
 import { ConfigurationService } from './services/configuration.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MovieComponent } from './components/movie/movie.component';
 
 const routes: Routes = [
   {path: 'search/:query/:year', component: MoviesListComponent},
   {path: 'search/:query', component: MoviesListComponent},
+  {path: 'movie/:id', component: MovieComponent},
   {path: 'discover', component: MoviesListComponent},
   {path: 'popular', component: MoviesListComponent},
   {path: '', redirectTo: '/popular', pathMatch: 'full'},
@@ -24,7 +26,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     MoviesListComponent,
-    SearchComponent
+    SearchComponent,
+    MovieComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

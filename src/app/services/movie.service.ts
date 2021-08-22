@@ -18,6 +18,11 @@ export class MovieService {
     return this.httpClient.get<GetResponseMovies>(url);
   }
 
+  getMovieById(movieId: number): Observable<Movie>{
+    let url = environment.tmdb.baseUrl + `/movie/${movieId}`;
+    return this.httpClient.get<Movie>(url);
+  }
+
   searchPaginated(params: {query: string | null, pageNo: number, year: string | null}): Observable<GetResponseMovies>{
     let url = environment.tmdb.baseUrl + `/search/movie?query=${params.query}`;
     if(params.year) url += `&primary_release_year=${params.year}`;

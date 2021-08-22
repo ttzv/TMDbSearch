@@ -8,16 +8,20 @@
     <div *ngFor="let movie of movieList" class="movie-entry">
         <div class="movie-poster">
             <div *ngIf="movie.release_date" class="movie-release-date">{{movie.release_date}}</div>
-            <img src="{{movie.posterFullPath}}" alt="{{movie.original_title}}">
+            <a routerLink="/movie/{{movie.id}}">
+                <img src="{{movie.posterFullPath}}" alt="{{movie.original_title}}">
+            </a>
         </div>
         <div class="movie-title">
             <div class="title-local">
-                <a>
+                <a routerLink="/movie/{{movie.id}}">
                     {{movie.title}}
                 </a> 
             </div>
             <div *ngIf="movie.title !== movie.original_title" class="title-orig">
-                {{movie.original_title}}
+                <a routerLink="/movie/{{movie.id}}">
+                    {{movie.original_title}}
+                </a>
             </div>
         </div>
     </div>
