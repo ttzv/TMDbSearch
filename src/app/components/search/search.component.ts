@@ -85,7 +85,6 @@ export class SearchComponent implements OnInit {
 
   performSearch(text: string){
     const filterQuery = this.getFilterQuery();
-    console.log(text);
     if(text){
       const year = this.dateAt?.value;
       if(year){
@@ -160,7 +159,6 @@ export class SearchComponent implements OnInit {
   }
 
   handleGenreDeselection(genre: Genre){
-    console.log(genre);
     if(this.selectedGenres.includes(genre)){
       this.genreList.push(genre);
       this.selectedGenres.splice(this.selectedGenres.indexOf(genre), 1);

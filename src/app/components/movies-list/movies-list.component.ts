@@ -105,7 +105,6 @@ export class MoviesListComponent implements OnInit {
 
   canLoadMore(scrollPosition: number){
     if(this.page >= this.totalPages) return false;
-    console.log(scrollPosition);
     return (scrollPosition >= 0.95 && !this.loading) ? 
       true : false;
   }
