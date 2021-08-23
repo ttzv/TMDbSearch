@@ -26,12 +26,9 @@ export class MoviesListComponent implements OnInit {
               private router:Router) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(() => {
+    this.route.url.subscribe(() => {
       this.handleRouteChange();
-    })
-    this.route.queryParamMap.subscribe(() => {
-      this.handleRouteChange();
-    })
+    });
   }
 
   handleRouteChange(){
@@ -108,6 +105,7 @@ export class MoviesListComponent implements OnInit {
 
   canLoadMore(scrollPosition: number){
     if(this.page >= this.totalPages) return false;
+    console.log(scrollPosition);
     return (scrollPosition >= 0.95 && !this.loading) ? 
       true : false;
   }
